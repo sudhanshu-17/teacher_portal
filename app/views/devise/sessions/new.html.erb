@@ -1,0 +1,33 @@
+<div class="auth-container">
+  <div class="auth-header">
+    <h2 class="auth-title">tailwebs.</h2>
+  </div>
+
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+    <div class="auth-field">
+      <%= f.label :username, class: "auth-label" %>
+      <div class="input-icon">
+        <i class="fas fa-user"></i>
+        <%= f.text_field :username, autofocus: true, autocomplete: "username", class: "auth-input" %>
+      </div>
+    </div>
+
+    <div class="auth-field">
+      <%= f.label :password, class: "auth-label" %>
+      <div class="input-icon">
+        <i class="fas fa-unlock"></i>
+        <%= f.password_field :password, autocomplete: "current-password", class: "auth-input" %>
+      </div>
+    </div>
+
+    <div class="forgot-password-section">
+      <%= link_to "Forgot Password?", new_password_path(resource_name), class: "forgot-password-link" %>
+    </div>
+
+    <div class="auth-actions">
+      <%= f.submit "Login", class: "auth-button" %>
+    </div>
+  <% end %>
+
+
+</div>

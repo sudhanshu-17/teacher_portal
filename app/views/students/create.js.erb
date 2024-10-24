@@ -1,0 +1,12 @@
+$('#student-modal').hide();
+
+$('#modal-body').html('');
+
+$.ajax({
+    url: '/students',
+    type: 'GET',
+    dataType: 'html',
+    success: function(response) {
+        $('.students-table').html($(response).find('.students-table').html());
+    }
+});

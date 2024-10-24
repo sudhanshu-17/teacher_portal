@@ -1,0 +1,87 @@
+<div class="container">
+  <div class="header">
+    <div class="logo">
+      <h1>tailwebs.</h1>
+    </div>
+    <div class="nav-links">
+      <%= link_to 'Home', root_path, class: 'nav-item' %>
+      <%= link_to 'Logout', destroy_teacher_session_path, method: :delete, class: 'nav-item' %>
+    </div>
+  </div>
+
+  <p id="notice"><%= notice %></p>
+
+  <div class="students-table">
+    <table class="table">
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>Subject</th>
+        <th>Mark</th>
+        <th>Action</th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <% @students.each do |student| %>
+        <tr>
+          <td>
+            <div class="student-info">
+              <span class="student-avatar"><%= student.name[0].upcase %></span>
+              <span><%= student.name %></span>
+            </div>
+          </td>
+          <td><%= student.subject %></td>
+          <td><%= student.marks %></td>
+          <td>
+            <div class="dropdown">
+              <button class="dropdown-btn">
+                <%= image_tag 'arrowdown.svg', alt: 'Dropdown icon', class: 'dropdown-icon' %>
+              </button>
+              <div class="dropdown-content">
+                <%= link_to 'Edit', edit_student_path(student), class: 'dropdown-item' %>
+                <%= link_to 'Delete', student, method: :delete, data: { confirm: 'Are you sure?' }, class: 'dropdown-item' %>
+              </div>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <button class="btn-add" id="add-student-btn">Add</button>
+</div>
+
+<div id="student-modal" class="modal" style="display:none;">
+  <div class="modal-content">
+    <span class="close-modal">&times;</span>
+    <div id="modal-body">
+    </div>
+  </div>
+</div>
+<script>
+    $(document).on('click', '#add-student-btn', function(event) {
+        event.preventDefault();
+
+        $.ajax({
+            url: '/students/new',
+            type: 'GET',
+            dataType: 'html',
+            success: function(response) {
+                $('#modal-body').html(response);
+                $('#student-modal').show();
+            },
+            error: function(xhr, status, error) {
+                console.log('Error loading the form:', error);
+            }
+        });
+    });
+
+    $(document).on('click', '.close-modal', function() {
+        $('#student-modal').hide();
+    });
+
+
+
+</script>
